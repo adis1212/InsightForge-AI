@@ -14,6 +14,7 @@ from app.models.workspace import Workspace, WorkspaceMember  # noqa: F401
 from app.models.dataset import Dataset, DatasetColumn, KPIResult  # noqa: F401
 from app.models.knowledge import KnowledgeDocument, DocumentChunk  # noqa: F401
 from app.models.agent import AgentSession, AgentMessageRecord  # noqa: F401
+from app.models.report import ReportRecord  # noqa: F401
 
 
 @asynccontextmanager

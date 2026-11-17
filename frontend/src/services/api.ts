@@ -264,3 +264,44 @@ export const agentApi = {
     return res.data
   },
 }
+
+
+// Stage 9: Executive Reports API
+export const reportsApi = {
+  generate: async (
+    workspaceId: string,
+    payload: import('../types').ReportGenerateRequest
+  ): Promise<import('../types').ReportDetail> => {
+    const res = await api.post(
+      `/workspaces/${workspaceId}/reports/generate`,
+      payload
+    )
+    return res.data
+  },
+
+  list: async (
+    workspaceId: string
+  ): Promise<import('../types').ReportSummary[]> => {
+    const res = await api.get(`/workspaces/${workspaceId}/reports/`)
+    return res.data
+  },
+
+  get: async (
+    workspaceId: string,
+    reportId: string
+  ): Promise<import('../types').ReportDetail> => {
+    const res = await api.get(`/workspaces/${workspaceId}/reports/${reportId}`)
+    return res.data
+  },
+
+  delete: async (
+    workspaceId: string,
+    reportId: string
+  ): Promise<void> => {
+    await api.delete(`/workspaces/${workspaceId}/reports/${reportId}`)
+  },
+
+  getDownloadUrl: (workspaceId: string, reportId: string): string => {
+    return `/api/v1/workspaces/${workspaceId}/reports/${reportId}/download`
+  },
+}

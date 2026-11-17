@@ -127,3 +127,22 @@
      - Transparent execution trace drawer exposing tool names, parameters, latency in milliseconds, and status chips.
      - Clear distinction between demo mode (unauthenticated exploration with benchmark data) and authenticated production mode.
 * **Consequences:** Provably safe tool dispatching, zero code execution vulnerabilities, reproducible execution traces, full numerical groundedness, and rich interactive data visualizations in the mobile-first frontend.
+
+---
+
+### ADR-014: Production-Grade PDF Reporting Engine and Comprehensive Academic Evaluation Framework
+* **Status:** Accepted
+* **Context:** Commercial decision-makers require executive-grade, audit-ready PDF reports containing verified KPI summaries, high-resolution figures, machine learning forecasts with prediction intervals, statistical anomaly distributions, and verifiable recommendations. Furthermore, an academic capstone demands reproducible experimental evaluation across 12 dimensions: Prompt v1 vs v2 accuracy, structural JSON adherence, hallucination rates, ML baseline comparison, anomaly recall on synthetic outliers, RAG retrieval latency, and agent routing reliability without fabricating metrics.
+* **Decision:**
+  1. Implement `ReportService` using `ReportLab` with custom `NumberedCanvas` (`Page X of Y`), corporate design palette, and non-interactive `matplotlib` figures (`Agg` backend) generating multi-page vector-rendered PDF documents. All numbers injected into the document originate strictly from deterministic computation (`AnalyticsService`, `ForecastService`, `AnomalyService`, and Stage 3 structured prompt outputs).
+  2. Implement `ReportRecord` relational model for report history tracking with complete metadata snapshots (dataset ID, prompt version v1/v2, KPI snapshot, generation timestamp).
+  3. Execute automated research evaluation script (`backend/scripts/run_academic_evaluation.py`) executing 12 empirical benchmarks against the wholesale benchmark dataset:
+     - Prompt v2 100.0% numerical accuracy vs v1 33.3% accuracy.
+     - Prompt v2 0 unsupported claims vs v1 ungrounded approximations.
+     - Prompt v2 100.0% JSON schema pass rate vs v1 0%.
+     - XGBoost holdout WAPE (45.71%) vs Seasonal Naive (23.92%), honestly reporting baseline competitiveness on intermittent wholesale series.
+     - Isolation Forest recall of 90.0% on injected extreme commercial anomalies.
+     - RAG cosine retrieval latency (sub-50ms warm) and precision.
+     - LangGraph agent tool routing accuracy (93.8%) and prompt injection rejection (100.0%).
+* **Consequences:** Audit-grade downloadable PDF artifacts, verifiable report history, complete transparency regarding ML model boundaries, and an academically defensible empirical evaluation artifact (`data/samples/academic_research_evaluation.json`).
+

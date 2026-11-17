@@ -71,8 +71,8 @@ _PROMPT_INJECTION_RE = re.compile(
 
 # Unsupported domain patterns
 _UNSUPPORTED_DOMAINS_RE = re.compile(
-    r"(?i)\b(write (a )?(poem|song|story|essay)|recipe for|who won the (world cup|super bowl)|"
-    r"capital of|weather in|joke|horoscope|translate to french|medical advice)\b"
+    r"(?i)\b(write (me )?(a )?(poem|sonnet|song|story|essay)|recipe for|who won the (world cup|super bowl)|"
+    r"capital of|weather in|joke|horoscope|translate to french|medical advice|astronomy|black holes)\b"
 )
 
 

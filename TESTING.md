@@ -1,6 +1,6 @@
 # InsightForge AI — Testing Strategy & Execution Log
 
-**Audit Status:** Fully Verified and Validated (Stage 8 Controlled Agentic AI Business Analyst Included)  
+**Audit Status:** Fully Verified and Validated (Stage 9 Reporting, Mobile Experience, Integration, QA & Academic Delivery Included)  
 **Last Run:** November 17, 2026  
 
 ---
@@ -11,23 +11,28 @@ InsightForge AI implements a multi-tier testing strategy across both backend and
 
 ```
                   ┌────────────────────────┐
-                  │    ESLint & Vite Build │  (Zero errors, 2,133 modules bundled)
+                  │    ESLint & Vite Build │  (Zero errors, 2,134 modules bundled)
                   ├────────────────────────┤
                   │    Vitest UI Tests     │  (10 tests: utils & data integrity)
                   ├────────────────────────┤
-                  │  Prompt Evaluation CLI │  (4 golden scenarios: v1 vs v2)
+                  │ Academic Evaluation CLI│  (12 benchmarks: Prompts, ML, RAG, Agent)
                   ├────────────────────────┤
-                  │  FastAPI Integration   │  (16 tests: auth, workspaces, prompts, ML, RAG)
+                  │ E2E Journey Tests      │  (5 tests: full lifecycle & boundaries)
                   ├────────────────────────┤
-                  │  Agent Copilot Tests   │  (13 tests: tools, bounds, security, trace)
+                  │ ReportLab PDF Tests    │  (4 tests: vector PDF, charts, REST API)
                   ├────────────────────────┤
-                  │  RAG Knowledge Tests   │  (13 tests: ingestion, embeddings, isolation)
+                  │ FastAPI Integration    │  (16 tests: auth, workspaces, prompts, ML, RAG)
                   ├────────────────────────┤
-                  │  ML Intelligence Tests │  (14 tests: XGBoost, Isolation Forest)
+                  │ Agent Copilot Tests    │  (13 tests: tools, bounds, security, trace)
                   ├────────────────────────┤
-                  │    Pytest Unit Tests   │  (45 tests: Pandas math, security, prompts)
+                  │ RAG Knowledge Tests    │  (13 tests: ingestion, embeddings, isolation)
+                  ├────────────────────────┤
+                  │ ML Intelligence Tests  │  (14 tests: XGBoost, Isolation Forest)
+                  ├────────────────────────┤
+                  │ Pytest Unit Tests      │  (45 tests: Pandas math, security, prompts)
                   └────────────────────────┘
 ```
+
 
 ---
 
@@ -45,12 +50,15 @@ InsightForge AI implements a multi-tier testing strategy across both backend and
   - `test_ml_forecast.py`: 8 tests covering weekly/monthly sales aggregation, cancellation exclusion, shifted lag/rolling features (zero lookahead leakage), chronological 20% holdout split, XGBoost regression, WAPE/MAE/RMSE evaluation against naive baseline, 95% confidence bounds, Joblib persistence, and insufficient data refusal (<10 periods).
   - `test_ml_anomalies.py`: 6 tests covering SKU median relative deviation feature matrix, cancellation and off-hours indicators, Isolation Forest training and [0, 1] continuous scoring, full provenance record preservation, synthetic anomaly injection (100% recall on injected outliers), and insufficient data refusal (<20 records).
   - `test_rag.py`: 13 tests covering TXT document ingestion, sliding-window chunking, semantic retrieval relevance, multi-tenant workspace isolation (zero cross-workspace leakage), minimum similarity threshold floor (0.25), document deletion with cascading chunk removal, prompt injection sanitization (neutralizing `IGNORE PREVIOUS` patterns), oversized file rejection (>25 MB), unsupported file extension rejection, citation provenance preservation, and evidence summary formatting.
+  - `test_reports.py`: 4 tests covering ReportLab vector PDF compilation, structural text extraction and verification via `pypdf`, missing dataset handling, and REST API generation, download, listing, and deletion.
+  - `test_e2e_journey.py`: 5 tests verifying the entire platform lifecycle: user registration $\rightarrow$ workspace creation $\rightarrow$ dataset upload $\rightarrow$ data quality audit $\rightarrow$ deterministic KPI calculation $\rightarrow$ ML forecasting & anomaly detection $\rightarrow$ RAG document ingestion & retrieval $\rightarrow$ AI Copilot inquiry $\rightarrow$ executive PDF generation and binary download, plus multi-tenant security boundary violation checks, prompt injection defense, unsupported domain fallback, and dataset error recovery.
 * **Execution Command:**
   ```powershell
   Set-Location d:\Insightforge\backend
   python -m pytest app/tests/ -v --tb=short
   ```
-* **Status:** **88 Passed, 0 Failed, 0 Warnings (100% Pass Rate in 51.48s)**
+* **Status:** **110 Passed, 0 Failed, 1 Warning (100% Pass Rate in 45.53s)**
+
 
 ### 2.2 Frontend Unit Tests (Vitest)
 * **Location:** `frontend/src/`

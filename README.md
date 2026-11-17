@@ -117,7 +117,25 @@ InsightForge AI is an augmented analytics B2B SaaS platform engineered for whole
 ### Frontend
 - **Framework:** React 18, TypeScript, Vite
 - **Styling:** Tailwind CSS, Radix UI primitives, Lucide React
-- **State & Query:** TanStack Query v5, Axios
+### 4. Controlled Agentic AI Business Analyst (Stage 8 — Prompt 5)
+* **LangGraph Stateful Agent Architecture:**
+  - 4-node deterministic topology (`classify_and_plan`, `validate_arguments`, `execute_tools`, `synthesize_response`).
+  - 7 approved business tools (`get_business_kpis`, `analyze_revenue_trends`, `get_product_performance`, `forecast_sales`, `detect_anomalies`, `retrieve_business_documents`, `generate_executive_report`).
+* **Security & Boundary Controls:**
+  - Zero arbitrary code execution (`eval`/`exec`) and zero raw SQL generation.
+  - Multi-tenant workspace validation, parameter boundary clamping, and adversarial prompt injection defense.
+* **AI Copilot UI:** Interactive chat, execution trace drawer (tool parameters, status, latency), and interactive Recharts visualizations.
+
+### 5. Boardroom Executive PDF Reports & Progressive Web App (Stage 9 — Prompt 6)
+* **Vector-Rendered Multi-Page PDF Engine:**
+  - Built with ReportLab using custom `NumberedCanvas` (`Page X of Y`), running headers, and corporate styling.
+  - 3 embedded high-resolution Matplotlib figures: Monthly Revenue Area, XGBoost Forecast with 95% Confidence Intervals vs Baseline, and Isolation Forest Anomaly Histogram.
+  - 8 structured audit sections: Executive Brief, Verified KPI Scorecard, Revenue Trends, ML Predictive Intelligence, Knowledge Citations, Prioritized Strategic Recommendations, Assumptions & Limitations, Verification Metadata.
+  - 100% deterministic arithmetic grounding: zero LLM calculation hallucination.
+* **Report History & REST API:** Complete persistence via `ReportRecord` model; endpoints for generation, listing, JSON inspection, binary download, and deletion.
+* **Progressive Web App (PWA):** Web App Manifest and Service Worker with offline bundle caching and strict network-only bypass for `/api/`.
+* **Full-Spectrum Academic Evaluation (12 Benchmarks):** Automated benchmark harness (`backend/scripts/run_academic_evaluation.py`) verifying Prompt v1 vs v2, XGBoost vs Seasonal Naive, Isolation Forest outlier recall, RAG latency, and agent routing accuracy.
+
 - **Visualization:** Recharts
 - **Testing:** Vitest (10 tests), ESLint 9
 
@@ -129,11 +147,11 @@ InsightForge AI is an augmented analytics B2B SaaS platform engineered for whole
 ```powershell
 Set-Location d:\Insightforge\backend
 
-# Run automated tests (101 tests)
+# Run automated tests (110 tests)
 python -m pytest app/tests/ -v
 
-# Run automated prompt evaluation harness
-python scripts/evaluate_prompts.py
+# Run full academic research evaluation suite (12 benchmarks)
+python scripts/run_academic_evaluation.py
 
 # Start development API server
 uvicorn app.main:app --reload --port 8000
@@ -147,14 +165,25 @@ Set-Location d:\Insightforge\frontend
 # Run unit tests (10 tests)
 npm test
 
-# Run linter
-npm run lint
+# Build production bundle
+npm run build
 
 # Start Vite development server
 npm run dev
 ```
 Application interface will be live at: `http://localhost:5173`  
-Navigate to `/prompt-studio` to access the **Prompt Engineering Studio**!
+Navigate to `/reports` for Executive PDF Reports or `/copilot` for the AI Business Analyst!
+
+---
+
+## 📚 Academic Capstone Deliverables
+- [FINAL_PROJECT_REPORT_OUTLINE.md](file:///d:/Insightforge/FINAL_PROJECT_REPORT_OUTLINE.md) — Comprehensive Capstone Research Outline
+- [DEMO_SCRIPT.md](file:///d:/Insightforge/DEMO_SCRIPT.md) — Step-by-Step Viva Presentation & Demo Script
+- [VIVA_QUESTIONS.md](file:///d:/Insightforge/VIVA_QUESTIONS.md) — Rigorous Defense Q&A for Academic Examiners
+- [DEPLOYMENT_GUIDE.md](file:///d:/Insightforge/DEPLOYMENT_GUIDE.md) — Production Deployment & Docker Containerization Guide
+- [EVALUATION.md](file:///d:/Insightforge/EVALUATION.md) — Complete 12-Benchmark Academic Evaluation Methodology
+- [DECISIONS.md](file:///d:/Insightforge/DECISIONS.md) — Architectural Decision Records (ADR-001 through ADR-014)
+
 
 ---
 

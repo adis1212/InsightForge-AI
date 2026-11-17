@@ -467,3 +467,41 @@ export interface ConversationSessionSummary {
   created_at: string
   updated_at: string
 }
+
+
+// ─── Stage 9: Executive PDF Reports ────────────────────────────────────────
+
+export interface ReportGenerateRequest {
+  dataset_id: string
+  prompt_version?: 'v1' | 'v2'
+  title?: string
+  include_forecast?: boolean
+  include_anomalies?: boolean
+  include_rag?: boolean
+}
+
+export interface ReportSummary {
+  id: string
+  workspace_id: string
+  dataset_id: string
+  title: string
+  prompt_version: string
+  file_size_bytes: number
+  format: string
+  status: string
+  created_at: string
+}
+
+export interface ReportDetail {
+  id: string
+  workspace_id: string
+  dataset_id: string
+  title: string
+  prompt_version: string
+  file_size_bytes: number
+  format: string
+  status: string
+  download_url: string
+  report_metadata?: Record<string, any> | null
+  created_at: string
+}

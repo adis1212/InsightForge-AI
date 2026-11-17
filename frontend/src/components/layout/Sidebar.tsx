@@ -12,6 +12,7 @@ import {
   Sparkles,
   Cpu,
   Bot,
+  FileText,
 } from 'lucide-react'
 import { cn } from '../../lib/utils'
 
@@ -19,6 +20,7 @@ export function Sidebar() {
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'AI Copilot', path: '/copilot', icon: Bot, badge: 'Stage 8' },
+    { name: 'Executive Reports', path: '/reports', icon: FileText, badge: 'Stage 9' },
     { name: 'ML Intelligence', path: '/ml', icon: Cpu, badge: 'Stage 6' },
     { name: 'Knowledge Base', path: '/knowledge', icon: BookOpen, badge: 'Stage 7' },
     { name: 'Prompt Studio', path: '/prompt-studio', icon: Sparkles, badge: 'Stage 5' },

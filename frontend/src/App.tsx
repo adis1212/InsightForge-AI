@@ -18,6 +18,7 @@ import { MLIntelligencePage } from './pages/MLIntelligencePage'
 import { PromptStudioPage } from './pages/PromptStudioPage'
 import { KnowledgeBasePage } from './pages/KnowledgeBasePage'
 import { AICopilotPage } from './pages/AICopilotPage'
+import { ReportsPage } from './pages/ReportsPage'
 import { SettingsPage } from './pages/SettingsPage'
 
 const queryClient = new QueryClient({
@@ -55,6 +56,8 @@ export function App() {
                   <Route path="/knowledge-base" element={<KnowledgeBasePage />} />
                   <Route path="/copilot" element={<AICopilotPage />} />
                   <Route path="/ai-copilot" element={<AICopilotPage />} />
+                  <Route path="/reports" element={<ReportsPage />} />
+                  <Route path="/executive-reports" element={<ReportsPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                 </Route>
 

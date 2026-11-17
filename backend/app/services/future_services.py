@@ -20,15 +20,5 @@ from app.services.retrieval_service import retrieval_service, RetrievalService  
 from app.services.agent_service import agent_service, AgentService  # noqa: F401
 
 
-class ReportService:
-    """PDF report generation — NOT YET IMPLEMENTED."""
+from app.services.report_service import report_service, ReportService  # noqa: F401
 
-    def generate(self, dataset_id: str, analytics: dict) -> dict[str, Any]:
-        return {
-            "status": "not_implemented",
-            "service": "report_service",
-            "message": "PDF report generation will be implemented in future phase.",
-        }
-
-
-report_service = ReportService()
