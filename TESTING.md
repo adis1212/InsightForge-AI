@@ -63,14 +63,15 @@ InsightForge AI implements a multi-tier testing strategy across both backend and
 ### 2.2 Frontend Unit Tests (Vitest)
 * **Location:** `frontend/src/`
 * **Test files:**
-  - `src/lib/utils.test.ts`: 4 tests covering currency, number, percentage, and byte size formatting.
+  - `src/lib/utils.test.ts`: 7 tests covering currency (USD and INR `formatINR`), number formatting, percentage signs, byte sizes, compact Indian currency (`formatIndianCompact` Lakhs and Crores), and Indian date formatting (`formatIndianDate` DD/MM/YYYY).
   - `src/services/api.test.ts`: 6 tests covering benchmark demo analytics integrity, AOV mathematical identity, monthly timeline continuity, product ranking descending order, canonical column roles, and preview row schema.
 * **Execution Command:**
   ```powershell
   Set-Location d:\Insightforge\frontend
-  npm test
+  npm test -- --run
   ```
-* **Status:** **10 Passed, 0 Failed (100% Pass Rate in 632ms)**
+* **Status:** **13 Passed, 0 Failed (100% Pass Rate in ~0.6s)**
+
 
 ### 2.3 Automated Prompt Engineering Evaluation Harness
 * **Script:** `backend/scripts/evaluate_prompts.py`

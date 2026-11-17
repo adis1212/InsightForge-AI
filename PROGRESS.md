@@ -18,6 +18,8 @@
 | **Stage 7** | Business Knowledge RAG | Prompt 4 | **100% COMPLETE** | Document ingestion (PDF/TXT), sentence-transformers vector embeddings, cosine retrieval, prompt grounding, and Knowledge Base UI. |
 | **Stage 8** | Controlled Agentic Copilot | Prompt 5 | **100% COMPLETE** | Controlled LangGraph business analysis agent, 7 approved tools, execution trace drawer, interactive charts, and AI Copilot UI. |
 | **Stage 9** | PDF Reports & Academic Delivery | Prompt 6 | **100% COMPLETE** | Vector PDF engine with ReportLab/Matplotlib, PWA with service worker caching, 110 passed backend tests, E2E journey test, 12-benchmark academic evaluation. |
+| **Stage 10 (Master Prompt 7)** | Indian Business Edition & Localization | Prompt 7 | **100% COMPLETE** | BharatTrade FMCG simulation (6k records, 24mo), data.gov.in Mandi ingestion, centralized INR (Lakhs/Crores), 110 backend + 13 frontend tests passing, 4 new docs + full README rebuild. |
+
 
 
 ---
@@ -289,6 +291,45 @@ During the full-stack source code audit, the following critical disconnected fea
 
 ### 5. Final Test Suite Results
 * **Backend Pytest:** **110 Passed, 0 Failed, 1 Warning** (100% pass rate in 45.5s).
-* **Frontend Vitest:** **10 Passed, 0 Failed** (100% pass rate in 3.0s).
+* **Frontend Vitest:** **13 Passed, 0 Failed** (100% pass rate in 0.6s).
 * **Frontend TypeScript & Vite Build:** **Clean production build** (`dist/` generated with zero type errors).
+
+---
+
+## Detailed Milestone Verification Log (Master Prompt 7 — Indian Business Edition)
+
+### 1. Comprehensive Project Audit
+* Audited all 16 project modules across full-stack architecture, services, databases, ML pipelines, and locale formatters.
+* Authored [docs/PROJECT_AUDIT.md](file:///d:/Insightforge/docs/PROJECT_AUDIT.md) with implementation locations, technology details, connectivity checks, and status badges.
+
+### 2. Real Indian Business Dataset Survey & Mandi Ingestion
+* Surveyed public Indian commercial datasets across data.gov.in and Kaggle.
+* Evaluated candidates across 14 standardized dimensions and authored [docs/DATASET_RESEARCH.md](file:///d:/Insightforge/docs/DATASET_RESEARCH.md).
+* Implemented official data.gov.in AGMARKNET mandi data ingestion script ([backend/scripts/ingest_indian_mandi_data.py](file:///d:/Insightforge/backend/scripts/ingest_indian_mandi_data.py)).
+
+### 3. BharatTrade Distributors — FMCG Wholesale Demo Simulation
+* Created deterministic seeded generator ([backend/scripts/generate_indian_demo_data.py](file:///d:/Insightforge/backend/scripts/generate_indian_demo_data.py)).
+* Generated [data/samples/bharattrade_fmcg_transactions.csv](file:///d:/Insightforge/data/samples/bharattrade_fmcg_transactions.csv): 6,000 transaction records across 24 continuous months (2023–2024), 6 FMCG categories (Packaged Foods, Beverages, Personal Care, Household Essentials, Grocery, Commercial Stationery), realistic wholesale pack pricing in INR, explicit unit costs (COGS), and GST slabs (5%, 12%, 18%).
+* Seeded 4 documented synthetic anomalies (100x pricing typo, 2500-unit bulk order, 3:32 AM transaction, negative pricing error).
+
+### 4. Centralized Indian Formatting & Regional Localization
+* Centralized Indian Rupee (INR / `₹`) formatting utility in [frontend/src/lib/utils.ts](file:///d:/Insightforge/frontend/src/lib/utils.ts): `formatINR` (Indian comma groupings `₹1,25,000`), `formatIndianCompact` (`₹12.50 Lakh`, `₹1.25 Cr`), and `formatIndianDate` (DD/MM/YYYY).
+* Fixed formatting null safety and percentage sign regressions; expanded Vitest unit tests to **13 passed tests** (100% pass rate).
+* Extended `COLUMN_PATTERNS` in [backend/app/services/dataset_service.py](file:///d:/Insightforge/backend/app/services/dataset_service.py) with Indian synonyms (`state`, `city`, `mandi`, `cogs`, `unit_cost`, `mrp`, `selling_price`).
+
+### 5. Localized Intelligence, Copilot & Reporting
+* Added Indian business policy RAG documents in [data/demo_knowledge/](file:///d:/Insightforge/data/demo_knowledge/) (`bharattrade_pricing_policy.txt`, `bharattrade_return_policy.txt`, `bharattrade_regional_targets.txt`).
+* Localized AI Copilot example prompt chips in [frontend/src/pages/AICopilotPage.tsx](file:///d:/Insightforge/frontend/src/pages/AICopilotPage.tsx).
+* Localized Boardroom Executive PDF generator in [backend/app/services/report_service.py](file:///d:/Insightforge/backend/app/services/report_service.py) with BharatTrade branding, INR symbols, and GST disclosures.
+
+### 6. Comprehensive Academic Documentation Suite
+* Completely rebuilt [README.md](file:///d:/Insightforge/README.md) across all 36 specified sections.
+* Created [docs/PROJECT_EXPLANATION.md](file:///d:/Insightforge/docs/PROJECT_EXPLANATION.md) (Beginner and technical deep-dive guide).
+* Created [docs/FEATURE_INVENTORY.md](file:///d:/Insightforge/docs/FEATURE_INVENTORY.md) (Feature-by-feature catalog).
+* Created [docs/TECHNOLOGY_DECISIONS.md](file:///d:/Insightforge/docs/TECHNOLOGY_DECISIONS.md) (Architectural rationales and tradeoffs).
+* Created [docs/PROJECT_HISTORY.md](file:///d:/Insightforge/docs/PROJECT_HISTORY.md) (Factual development journey and fixes).
+* Updated [DEMO_SCRIPT.md](file:///d:/Insightforge/DEMO_SCRIPT.md) with 5–7 minute college demonstration walkthrough.
+* Updated [VIVA_QUESTIONS.md](file:///d:/Insightforge/VIVA_QUESTIONS.md) with Indian edition defense Q&A.
+* Recorded ADR-015 in [DECISIONS.md](file:///d:/Insightforge/DECISIONS.md).
+
 

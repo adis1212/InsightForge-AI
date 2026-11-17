@@ -24,18 +24,34 @@ class AnalyticsService:
     ROLE_CUSTOMER_ID = "customer_id"
     ROLE_COUNTRY = "country"
     ROLE_DATE = "date"
+    ROLE_UNIT_COST = "unit_cost"
+    ROLE_CATEGORY = "category"
+    ROLE_CITY = "city"
 
-    def __init__(self, df: pd.DataFrame, column_mapping: dict[str, str]):
+    def __init__(self, df: pd.DataFrame, column_mapping: dict[str, str], currency: str = "USD"):
         """
-        Initialize with a DataFrame and column mapping.
+        Initialize with a DataFrame, column mapping, and currency code.
 
         Args:
             df: Raw DataFrame from the uploaded file.
             column_mapping: Maps standard role names to actual column names.
+            currency: Currency code (USD, INR, etc.) for formatted output.
         """
         self.raw_df = df.copy()
         self.mapping = column_mapping
+        self.currency = currency.upper()
         self.df = self._prepare_data()
+
+    def _fmt_currency(self, value: float) -> str:
+        """Format currency value according to configured currency."""
+        if self.currency == "INR":
+            # Indian number grouping: lakhs and crores
+            if abs(value) >= 1e7:
+                return f"₹{value / 1e7:,.2f} Cr"
+            if abs(value) >= 1e5:
+                return f"₹{value / 1e5:,.2f} Lakh"
+            return f"₹{value:,.2f}"
+        return f"${value:,.2f}"
 
     def _get_col(self, role: str) -> Optional[str]:
         """Get actual column name for a standard role."""
@@ -107,7 +123,7 @@ class AnalyticsService:
             return KPIValue(
                 name="Total Revenue",
                 value=revenue,
-                formatted=f"${revenue:,.2f}",
+                formatted=self._fmt_currency(revenue),
                 description="Sum of (quantity × unit price) for valid transactions",
             )
         except Exception as e:
@@ -173,7 +189,7 @@ class AnalyticsService:
             return KPIValue(
                 name="Average Order Value",
                 value=0.0,
-                formatted="$0.00",
+                formatted=self._fmt_currency(0.0),
                 description="Mean revenue per order (no valid orders found)",
             )
 
@@ -181,7 +197,7 @@ class AnalyticsService:
         return KPIValue(
             name="Average Order Value",
             value=aov,
-            formatted=f"${aov:,.2f}",
+            formatted=self._fmt_currency(aov),
             description="Mean revenue per order",
         )
 

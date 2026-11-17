@@ -56,6 +56,8 @@ REPORTS_DIR = Path(__file__).resolve().parents[2] / "uploads" / "reports"
 REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
 SYNTHETIC_DATASET_PATH = Path(__file__).resolve().parents[3] / "data" / "samples" / "synthetic_wholesale.csv"
+BHARATTRADE_DATASET_PATH = Path(__file__).resolve().parents[3] / "data" / "samples" / "bharattrade_fmcg_transactions.csv"
+
 SYNTHETIC_MAPPING = {
     "invoice_no": "InvoiceNo",
     "stock_code": "StockCode",
@@ -65,6 +67,19 @@ SYNTHETIC_MAPPING = {
     "customer_id": "CustomerID",
     "country": "Country",
     "date": "InvoiceDate",
+}
+
+BHARATTRADE_MAPPING = {
+    "invoice_no": "InvoiceNo",
+    "stock_code": "StockCode",
+    "description": "Description",
+    "quantity": "Quantity",
+    "unit_price": "UnitPrice",
+    "customer_id": "CustomerID",
+    "country": "State",
+    "date": "InvoiceDate",
+    "unit_cost": "UnitCost",
+    "city": "City",
 }
 
 # Corporate Brand Colors
@@ -128,6 +143,12 @@ class ReportService:
 
     def _resolve_data(self, db: Session, workspace_id: str, dataset_id: str):
         """Safely load DataFrame, column mapping, and dataset title."""
+        if dataset_id == "bharattrade-demo" or dataset_id.startswith("bharattrade"):
+            if not BHARATTRADE_DATASET_PATH.exists():
+                raise ValueError("BharatTrade Indian demo dataset file not found.")
+            df = read_dataset(str(BHARATTRADE_DATASET_PATH))
+            return df, BHARATTRADE_MAPPING, "BharatTrade Distributors — Demo Business (FY2023-24)"
+
         if dataset_id.startswith("demo-") or dataset_id == "benchmark-wholesale":
             if not SYNTHETIC_DATASET_PATH.exists():
                 raise ValueError("Synthetic benchmark wholesale dataset file not found.")
@@ -151,7 +172,7 @@ class ReportService:
     # Matplotlib Chart Renderers
     # -----------------------------------------------------------------------
 
-    def _render_revenue_chart(self, monthly_df: pd.DataFrame) -> bytes:
+    def _render_revenue_chart(self, monthly_df: pd.DataFrame, cur_sym: str = "$") -> bytes:
         """Render monthly revenue timeline as high-resolution PNG."""
         fig, ax = plt.subplots(figsize=(6.5, 2.4), dpi=200)
         fig.patch.set_facecolor("#ffffff")
@@ -163,8 +184,8 @@ class ReportService:
         ax.plot(x, y, color="#0d9488", marker="o", linewidth=2.0, markersize=4, label="Monthly Net Revenue")
         ax.fill_between(x, y, color="#0d9488", alpha=0.15)
 
-        ax.set_title("Monthly Net Revenue Timeline ($ Thousands)", fontsize=10, fontweight="bold", color="#0f172a", pad=8)
-        ax.set_ylabel("Revenue ($k)", fontsize=8, color="#334155")
+        ax.set_title(f"Monthly Net Revenue Timeline ({cur_sym} Thousands)", fontsize=10, fontweight="bold", color="#0f172a", pad=8)
+        ax.set_ylabel(f"Revenue ({cur_sym}k)", fontsize=8, color="#334155")
         ax.tick_params(axis="both", labelsize=7, colors="#475569")
         ax.grid(True, linestyle="--", alpha=0.4, color="#cbd5e1")
         plt.xticks(rotation=30, ha="right")
@@ -176,7 +197,7 @@ class ReportService:
         buf.seek(0)
         return buf.getvalue()
 
-    def _render_forecast_chart(self, fc_response: Any) -> Optional[bytes]:
+    def _render_forecast_chart(self, fc_response: Any, cur_sym: str = "$") -> Optional[bytes]:
         """Render XGBoost forecast with 95% confidence bounds."""
         if not fc_response or fc_response.status != "success":
             return None
@@ -229,7 +250,7 @@ class ReportService:
 
         wape_str = f"Holdout WAPE: {fc_response.evaluation.xgboost_metrics.wape}%" if fc_response.evaluation else ""
         ax.set_title(f"XGBoost Sales Forecast vs Baseline ({wape_str})", fontsize=10, fontweight="bold", color="#0f172a", pad=8)
-        ax.set_ylabel("Revenue ($k)", fontsize=8, color="#334155")
+        ax.set_ylabel(f"Revenue ({cur_sym}k)", fontsize=8, color="#334155")
         ax.tick_params(axis="both", labelsize=7, colors="#475569")
         ax.set_xticks(list(x_indices))
         ax.set_xticklabels(periods, rotation=35, ha="right", fontsize=6.5)
@@ -367,11 +388,12 @@ class ReportService:
         verification = prompt_res.stage_3.verification
 
         # 6. Render Charts
+        cur_sym = "₹" if (request.dataset_id.startswith("bharattrade") or "bharattrade" in dataset_name.lower()) else "$"
         monthly_df = pd.DataFrame([
             {"period": p.period, "revenue": p.revenue} for p in monthly_trends
         ])
-        chart_rev_bytes = self._render_revenue_chart(monthly_df)
-        chart_fc_bytes = self._render_forecast_chart(fc_response) if fc_response else None
+        chart_rev_bytes = self._render_revenue_chart(monthly_df, cur_sym=cur_sym)
+        chart_fc_bytes = self._render_forecast_chart(fc_response, cur_sym=cur_sym) if fc_response else None
         chart_anom_bytes = self._render_anomaly_chart(anom_response) if anom_response else None
 
         # 7. Compile PDF Document with ReportLab
@@ -517,7 +539,7 @@ class ReportService:
         summary_text = (
             structured_brief.executive_summary
             if structured_brief and structured_brief.executive_summary
-            else f"Commercial performance audit for {dataset_name} indicates total gross sales of ${kpi_summary.total_revenue.value:,.2f} across {kpi_summary.unique_orders.value:,.0f} verified orders."
+            else f"Commercial performance audit for {dataset_name} indicates total gross sales of {cur_sym}{kpi_summary.total_revenue.value:,.2f} across {kpi_summary.unique_orders.value:,.0f} verified orders."
         )
         story.append(Paragraph(summary_text, style_body))
         story.append(Spacer(1, 6))
@@ -533,7 +555,7 @@ class ReportService:
             ],
             [
                 Paragraph("Total Net Revenue (excl. Cancellations)", style_table_cell),
-                Paragraph(f"<b>${kpi_summary.total_revenue.value:,.2f}</b>", style_table_cell),
+                Paragraph(f"<b>{cur_sym}{kpi_summary.total_revenue.value:,.2f}</b>", style_table_cell),
                 Paragraph("<font face='Courier'>[METRIC:total_revenue]</font>", style_table_cell),
                 Paragraph("VERIFIED (Pandas)", style_table_cell),
             ],
@@ -545,7 +567,7 @@ class ReportService:
             ],
             [
                 Paragraph("Average Order Value (AOV)", style_table_cell),
-                Paragraph(f"<b>${kpi_summary.average_order_value.value:,.2f}</b>", style_table_cell),
+                Paragraph(f"<b>{cur_sym}{kpi_summary.average_order_value.value:,.2f}</b>", style_table_cell),
                 Paragraph("<font face='Courier'>[METRIC:average_order_value]</font>", style_table_cell),
                 Paragraph("VERIFIED (Pandas)", style_table_cell),
             ],
@@ -604,8 +626,8 @@ class ReportService:
                 f"XGBoost regressor trained on weekly aggregated sales with forward-shifted lag features (1..4) "
                 f"and rolling mean windows. Evaluated against a <b>Seasonal Naive Lag-1 Baseline</b> across a 20% "
                 f"chronological holdout test set with zero lookahead leakage.<br/>"
-                f"- <b>XGBoost Holdout WAPE:</b> <b>{eval_info.xgboost_metrics.wape}%</b> (MAE: ${eval_info.xgboost_metrics.mae:,.2f})<br/>"
-                f"- <b>Seasonal Naive WAPE:</b> <b>{eval_info.baseline_metrics.wape}%</b> (MAE: ${eval_info.baseline_metrics.mae:,.2f})<br/>"
+                f"- <b>XGBoost Holdout WAPE:</b> <b>{eval_info.xgboost_metrics.wape}%</b> (MAE: {cur_sym}{eval_info.xgboost_metrics.mae:,.2f})<br/>"
+                f"- <b>Seasonal Naive WAPE:</b> <b>{eval_info.baseline_metrics.wape}%</b> (MAE: {cur_sym}{eval_info.baseline_metrics.mae:,.2f})<br/>"
                 f"- <b>Evaluation Verdict:</b> {eval_info.evaluation_verdict}"
             )
             story.append(Paragraph(fc_commentary, style_body))
@@ -703,6 +725,11 @@ class ReportService:
                 "Isolation Forest flags mathematical outliers based on multivariate distance, NOT legal evidence of fraud.",
                 "COGS and gross margin calculations remain unavailable until reliable item costs are provided.",
             ]
+        if cur_sym == "₹":
+            disclosures.append(
+                "BharatTrade Distributors is a demonstration business simulation for Indian FMCG wholesale distribution. "
+                "Figures are in Indian Rupees (INR / ₹). GST-exclusive amounts are reported in primary metrics with tax separated under applicable 5%, 12%, and 18% slabs."
+            )
         for ass in disclosures:
             story.append(Paragraph(f"• {ass}", style_callout))
 

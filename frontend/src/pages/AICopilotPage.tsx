@@ -21,12 +21,12 @@ const DEMO_WORKSPACE = 'demo-workspace-01'
 const BENCHMARK_DATASET = 'benchmark-wholesale'
 
 const EXAMPLE_PROMPTS = [
-  { label: 'Summarize KPIs', query: 'What is our total revenue, order count, and cancellation rate?', icon: BarChart3 },
-  { label: 'Revenue Trends', query: 'Show monthly revenue trends and growth trajectory', icon: TrendingUp },
-  { label: 'Forecast Sales', query: 'Forecast revenue for the next 6 periods ahead', icon: Activity },
-  { label: 'Detect Anomalies', query: 'Check for outliers and suspicious transactions', icon: Shield },
-  { label: 'Top Products', query: 'Show top 5 products by revenue', icon: Database },
-  { label: 'Executive Report', query: 'Generate a comprehensive executive commercial report for the board', icon: FileText },
+  { label: 'Business KPIs', query: 'What is our total revenue, order count, and cancellation rate?', icon: BarChart3 },
+  { label: 'Revenue Trends', query: 'Show monthly revenue trends and identify which months had the highest growth', icon: TrendingUp },
+  { label: 'Forecast Sales', query: 'Forecast our revenue for the next 6 months in rupees', icon: Activity },
+  { label: 'Detect Anomalies', query: 'Find unusual transactions in the last 90 days', icon: Shield },
+  { label: 'Top Products', query: 'Which products generated the highest revenue this quarter?', icon: Database },
+  { label: 'Executive Report', query: 'Generate an executive report for this business', icon: FileText },
 ]
 
 // ─── Status Badge Component ────────────────────────────────────────────────

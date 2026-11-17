@@ -1,0 +1,6 @@
+State,District,Market,Commodity,Variety,Arrival_Date,Min_Price,Max_Price,Modal_Price
+Maharashtra,Pune,Pune,Onion,Red,2024-05-10,1200,2200,1800
+Maharashtra,Nashik,Lasalgaon,Onion,Red,2024-05-10,1150,2100,1750
+Maharashtra,Nagpur,Nagpur,Orange,Nagpur,2024-05-10,2800,5200,4200
+Karnataka,Bengaluru,Binny Mill (F&V),Tomato,Local,2024-05-10,1400,2600,2000
+Gujarat,Ahmedabad,Ahmedabad,Wheat,Lokwan,2024-05-10,2400,3100,2750

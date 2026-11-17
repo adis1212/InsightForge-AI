@@ -1,0 +1,38 @@
+BHARATTRADE DISTRIBUTORS — PRICING POLICY (DEMO DOCUMENT)
+
+DISCLAIMER: This is a fictional demonstration document for the BharatTrade Distributors demo business.
+It does not represent any real company's policies or government regulations.
+
+1. STANDARD WHOLESALE PRICING
+
+All wholesale prices are quoted in Indian Rupees (INR / ₹) and are exclusive of GST unless stated otherwise.
+
+Minimum Order Value (MOV): ₹5,000 per invoice for all trade partners.
+Minimum Order Quantity: 10 units per SKU per order.
+
+2. VOLUME DISCOUNT SCHEDULE
+
+Orders exceeding 80 units per SKU qualify for a flat 5% trade discount on the listed MRP-based wholesale price.
+Orders exceeding 200 units per SKU qualify for a 8% institutional discount, subject to advance payment.
+
+3. GST APPLICABILITY
+
+- Packaged Foods & Grocery: 5% GST (CGST 2.5% + SGST 2.5% for intra-state; IGST 5% for inter-state)
+- Beverages: 12% GST
+- Personal Care Products: 18% GST
+- Household Essentials: 18% GST
+- Commercial Stationery: 18% GST
+
+All invoices clearly separate the GST-exclusive line total and the GST amount.
+BharatTrade does not absorb GST for trade partners.
+
+4. PRICE REVISION
+
+Wholesale prices are reviewed quarterly. Price revisions are communicated 15 days in advance.
+No retrospective price adjustments are permitted on delivered and accepted goods.
+
+5. SPECIAL FESTIVE SEASON PRICING
+
+During Diwali and Navratri festive season (October-November), select Packaged Foods and Beverages
+categories may carry promotional pricing. Promotional discounts are clearly marked on invoices
+and do not stack with volume discounts.

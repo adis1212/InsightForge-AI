@@ -17,9 +17,10 @@ COLUMN_PATTERNS = {
     "stock_code": ["stockcode", "stock_code", "productcode", "product_code", "sku", "item_code", "itemcode"],
     "description": ["description", "productname", "product_name", "itemname", "item_name", "product", "item"],
     "quantity": ["quantity", "qty", "units", "amount", "count"],
-    "unit_price": ["unitprice", "unit_price", "price", "rate", "cost"],
-    "customer_id": ["customerid", "customer_id", "custid", "cust_id", "client_id", "clientid"],
-    "country": ["country", "region", "location", "territory", "market"],
+    "unit_price": ["unitprice", "unit_price", "price", "rate", "mrp", "selling_price"],
+    "unit_cost": ["unitcost", "unit_cost", "cogs", "cost", "purchase_price", "cost_price"],
+    "customer_id": ["customerid", "customer_id", "custid", "cust_id", "client_id", "clientid", "buyer_id"],
+    "country": ["country", "state", "city", "region", "location", "territory", "market", "mandi"],
     "date": ["invoicedate", "invoice_date", "date", "orderdate", "order_date", "transaction_date", "transactiondate"],
 }
 

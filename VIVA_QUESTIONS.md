@@ -156,3 +156,43 @@ Our custom Service Worker (`frontend/public/sw.js`) implements a **staged cachin
 Modern Python runtime environments (Python 3.12 and 3.14) running `bcrypt >= 4.1.0` removed internal deprecated attributes (specifically `bcrypt.__about__`), which causes `passlib.context.CryptContext` to raise fatal `AttributeError` and `ValueError` exceptions during initialization. Furthermore, the Blowfish algorithm underlying bcrypt enforces a strict 72-byte password length boundary. 
 
 By utilizing the native `bcrypt` library directly (`bcrypt.hashpw` and `bcrypt.checkpw`) with explicit UTF-8 encoding and 72-byte truncation boundaries in `app/core/security.py`, we eliminated deprecated third-party wrappers, guaranteed compatibility across all modern Python runtimes, and ensured sub-millisecond password hashing security.
+
+---
+
+## Category 6: Indian Business Edition, Real Datasets & Regional Localization
+
+### Q6.1: Why did you implement the "BharatTrade Distributors" simulation instead of relying exclusively on raw public Kaggle or government datasets?
+**Answer:**
+We adopted a dual-track strategy based on research findings documented in `docs/DATASET_RESEARCH.md`:
+1. **Commercial Privacy in Indian Distribution:** Real Indian SME wholesale distributors (e.g. FMCG super-stockists in Pune or Mumbai) treat their invoice ledgers, retailer credit terms, and supplier margins as strictly confidential trade secrets; authentic full-ledger datasets with acquisition costs are not publicly published due to commercial competition and GST privacy.
+2. **Limitations of Raw Public Datasets:**
+   - *Amazon India Sales Report (Kaggle):* Represents authentic merchant data, but covers only 90 days of apparel sales and lacks Cost of Goods Sold (COGS).
+   - *AGMARKNET Mandi Price Index (data.gov.in):* Represents 100% authentic government agricultural records, but captures wholesale market arrival prices per quintal rather than company customer invoices or order ledgers.
+3. **The BharatTrade Solution:** We built a deterministic seeded FMCG wholesale simulation (**BharatTrade Distributors — Demo Business**) reflecting realistic Indian commercial parameters: 24 continuous months (2023–2024), 6,000 line items across 6 FMCG categories, regional hubs across Maharashtra, Karnataka, Telangana, Delhi NCR, and Gujarat, explicit unit costs, and GST slabs. In parallel, we provide a repeatable data ingestion script (`backend/scripts/ingest_indian_mandi_data.py`) connecting directly to official data.gov.in API feeds.
+
+---
+
+### Q6.2: How does InsightForge handle GST (Goods and Services Tax) in its commercial calculations?
+**Answer:**
+In Indian commercial accounting, confusing gross revenue with GST tax collections leads to severe compliance and turnover reporting errors:
+1. **Tax Separation:** Our analytics engine deterministically calculates Net Commercial Revenue based on **GST-exclusive amounts** (`Quantity × UnitPrice`), ensuring that tax liabilities are not falsely reported as business earnings.
+2. **Tax Slabs:** Product categories in BharatTrade are mapped to their statutory GST slabs:
+   - Staple Groceries & Packaged Foods: 5% GST (2.5% CGST + 2.5% SGST for intra-state; 5% IGST for inter-state).
+   - Processed Foods & Beverages: 12% GST.
+   - Personal Care, Household Essentials, and Commercial Stationery: 18% GST.
+3. **Audit Disclosures:** Our executive PDF reports and UI scorecards explicitly state whether figures represent GST-exclusive net sales or include tax collections, preventing misleading financial disclosures.
+
+---
+
+### Q6.3: How does your centralized formatting utility handle the Indian numbering system (Lakhs and Crores) without numerical rounding drift?
+**Answer:**
+Western numbering groups digits in sets of thousands ($100,000 = 100\text{k}$; $1,000,000 = 1\text{M}$), whereas the Indian numbering system groups the first three digits followed by sets of two ($1,00,000 = 1\text{ Lakh}$; $1,00,00,000 = 1\text{ Crore}$).
+
+In `frontend/src/lib/utils.ts` and `backend/app/services/analytics_service.py`:
+1. **Underlying Precision:** All calculations, aggregations, and ML model inputs retain full IEEE-754 64-bit floating point precision. Numerical rounding is applied **only at the final presentation layer**.
+2. **Intl.NumberFormat (`en-IN`):** The utility uses `new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' })`, producing authentic Indian groupings (e.g. `₹1,25,000.00`).
+3. **Compact Executive Formatter (`formatIndianCompact`):**
+   - For values $\ge 1\text{ Crore}$ ($\ge 10^7$): Formats as `₹X.XX Cr` (e.g. `₹1.25 Cr`).
+   - For values between $1\text{ Lakh}$ and $99.9\text{ Lakh}$ ($10^5 \le v < 10^7$): Formats as `₹X.XX Lakh` (e.g. `₹12.50 Lakh`).
+   - For values $< 1\text{ Lakh}$: Formats with standard comma groupings (e.g. `₹12,500`).
+

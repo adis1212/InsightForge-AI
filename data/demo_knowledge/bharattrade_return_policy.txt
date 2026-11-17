@@ -1,0 +1,37 @@
+BHARATTRADE DISTRIBUTORS — RETURN AND REFUND POLICY (DEMO DOCUMENT)
+
+DISCLAIMER: This is a fictional demonstration document for the BharatTrade Distributors demo business.
+It does not represent any real company's policies.
+
+1. RETURN ELIGIBILITY
+
+Returns are accepted within 7 calendar days of delivery for the following reasons:
+- Damaged or broken packaging during transit.
+- Incorrect product delivered (wrong SKU or variant).
+- Products past the printed expiry date at the time of delivery.
+- Quality defects visible on inspection.
+
+2. NON-RETURNABLE ITEMS
+
+The following categories are non-returnable once accepted:
+- Opened or used Personal Care products.
+- Perishable Beverages (coconut water, mango pulp) after cold-chain handoff.
+- Stationery items with broken seals.
+
+3. RESTOCKING FEE
+
+A restocking fee of 10% of the invoice value applies to all accepted returns
+where the goods are in resalable condition but the return is initiated by the buyer
+for reasons other than damage or defect.
+
+4. REFUND PROCESS
+
+Refunds are processed within 15 business days of return acceptance.
+Refunds are credited to the original payment method or adjusted against outstanding invoices.
+GST adjustments on returned goods are handled via credit notes as per CGST/SGST rules.
+
+5. CANCELLATION POLICY
+
+Orders may be cancelled before dispatch at no charge.
+Orders cancelled after dispatch but before delivery incur a logistics charge of ₹200 per shipment.
+Cancellation invoices are prefixed with 'C' (e.g., CINV-100045).

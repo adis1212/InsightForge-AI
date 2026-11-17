@@ -18,6 +18,8 @@ from app.services.future_services import forecast_service, anomaly_service
 router = APIRouter(prefix="/workspaces/{workspace_id}/analytics", tags=["Analytics"])
 
 SYNTHETIC_DATASET_PATH = Path(__file__).resolve().parents[5] / "data" / "samples" / "synthetic_wholesale.csv"
+BHARATTRADE_DATASET_PATH = Path(__file__).resolve().parents[5] / "data" / "samples" / "bharattrade_fmcg_transactions.csv"
+
 SYNTHETIC_MAPPING = {
     "invoice_no": "InvoiceNo",
     "stock_code": "StockCode",
@@ -27,6 +29,20 @@ SYNTHETIC_MAPPING = {
     "customer_id": "CustomerID",
     "country": "Country",
     "date": "InvoiceDate",
+}
+
+BHARATTRADE_MAPPING = {
+    "invoice_no": "InvoiceNo",
+    "stock_code": "StockCode",
+    "description": "Description",
+    "quantity": "Quantity",
+    "unit_price": "UnitPrice",
+    "customer_id": "CustomerID",
+    "country": "State",
+    "date": "InvoiceDate",
+    "category": "Category",
+    "unit_cost": "UnitCost",
+    "city": "City",
 }
 
 
@@ -60,6 +76,12 @@ def _get_dataset_or_demo(db: Session, workspace_id: str, dataset_id: str):
         df = read_dataset(str(SYNTHETIC_DATASET_PATH))
         return df, SYNTHETIC_MAPPING
 
+    if dataset_id == "bharattrade-demo" or dataset_id.startswith("bharattrade"):
+        if not BHARATTRADE_DATASET_PATH.exists():
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="BharatTrade Indian demo dataset file not found")
+        df = read_dataset(str(BHARATTRADE_DATASET_PATH))
+        return df, BHARATTRADE_MAPPING
+
     dataset = (
         db.query(Dataset)
         .filter(Dataset.id == dataset_id, Dataset.workspace_id == workspace_id)
@@ -81,6 +103,13 @@ def _get_dataset_or_demo(db: Session, workspace_id: str, dataset_id: str):
     return df, dataset.column_mapping
 
 
+def _detect_currency(dataset_id: str) -> str:
+    """Detect currency based on dataset ID."""
+    if dataset_id.startswith("bharattrade"):
+        return "INR"
+    return "USD"
+
+
 @router.get("/{dataset_id}", response_model=AnalyticsResponse)
 def get_analytics(
     workspace_id: str,
@@ -91,7 +120,8 @@ def get_analytics(
     """Get full analytics for a dataset (deterministic Pandas calculations)."""
     _check_workspace_access(db, workspace_id, current_user)
     df, mapping = _get_dataset_or_demo(db, workspace_id, dataset_id)
-    service = AnalyticsService(df, mapping)
+    currency = _detect_currency(dataset_id)
+    service = AnalyticsService(df, mapping, currency=currency)
     return service.calculate_full_analytics(dataset_id)
 
 
@@ -105,7 +135,8 @@ def get_kpi_summary(
     """Get KPI summary for a dataset."""
     _check_workspace_access(db, workspace_id, current_user)
     df, mapping = _get_dataset_or_demo(db, workspace_id, dataset_id)
-    service = AnalyticsService(df, mapping)
+    currency = _detect_currency(dataset_id)
+    service = AnalyticsService(df, mapping, currency=currency)
     return service.calculate_summary(dataset_id)
 
 
@@ -120,7 +151,7 @@ def get_forecast(
     """Get XGBoost sales forecast with naive baseline comparison and 95% confidence bounds."""
     _check_workspace_access(db, workspace_id, current_user)
     df, mapping = _get_dataset_or_demo(db, workspace_id, dataset_id)
-    dataset_name = "Wholesale Benchmark (FY2023)" if dataset_id.startswith("demo-") or dataset_id == "benchmark-wholesale" else dataset_id
+    dataset_name = "Wholesale Benchmark (FY2023)" if dataset_id.startswith("demo-") or dataset_id == "benchmark-wholesale" else ("BharatTrade Distributors (FY2023-24)" if dataset_id.startswith("bharattrade") else dataset_id)
     return forecast_service.predict(
         dataset_id=dataset_id,
         periods=periods,
@@ -141,7 +172,7 @@ def get_anomalies(
     """Detect transaction outliers using Isolation Forest with explainable pattern tags."""
     _check_workspace_access(db, workspace_id, current_user)
     df, mapping = _get_dataset_or_demo(db, workspace_id, dataset_id)
-    dataset_name = "Wholesale Benchmark (FY2023)" if dataset_id.startswith("demo-") or dataset_id == "benchmark-wholesale" else dataset_id
+    dataset_name = "Wholesale Benchmark (FY2023)" if dataset_id.startswith("demo-") or dataset_id == "benchmark-wholesale" else ("BharatTrade Distributors (FY2023-24)" if dataset_id.startswith("bharattrade") else dataset_id)
     return anomaly_service.detect(
         dataset_id=dataset_id,
         df=df,

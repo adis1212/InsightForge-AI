@@ -146,3 +146,18 @@
      - LangGraph agent tool routing accuracy (93.8%) and prompt injection rejection (100.0%).
 * **Consequences:** Audit-grade downloadable PDF artifacts, verifiable report history, complete transparency regarding ML model boundaries, and an academically defensible empirical evaluation artifact (`data/samples/academic_research_evaluation.json`).
 
+---
+
+### ADR-015: Indian Business Edition Localization, Real Dataset Ingestion & BharatTrade FMCG Simulation
+* **Status:** Accepted
+* **Context:** The initial prototype used Western wholesale transaction records denominated in USD/GBP spanning Germany, the UK, and the USA. For commercial adoption by Indian SMEs, FMCG wholesalers, and distributors, as well as academic evaluation in Indian institutions, the platform required authentic localization: Indian Rupee (INR / ₹) currency conventions, Indian geographical distribution hubs (Pune, Mumbai, Nagpur, Bengaluru, etc.), FMCG product categories, GST distinctions, and a realistic demonstration experience that does not compromise proprietary real-world business ledgers.
+* **Decision:**
+  1. Adopt a **Dual-Track Data Strategy**:
+     - *Demonstration Track:* Implement **BharatTrade Distributors — Demo Business**, a deterministic seeded FMCG wholesale simulation (6,000 records, 24 months from Jan 2023 to Dec 2024) modeling a Pune-headquartered distributor with regional hubs, explicit unit costs (COGS), wholesale pack pricing, GST tax slabs (5%, 12%, 18%), and documented seasonal and operational anomalies.
+     - *Real Data Ingestion Track:* Author [backend/scripts/ingest_indian_mandi_data.py](file:///d:/Insightforge/backend/scripts/ingest_indian_mandi_data.py) to ingest authentic open government agricultural mandi transaction feeds directly from data.gov.in (AGMARKNET).
+  2. Implement centralized Indian locale formatting across both frontend (`frontend/src/lib/utils.ts`) and backend (`backend/app/services/analytics_service.py`), supporting authentic Indian number groupings (`₹1,25,000`), compact executive notations (`₹12.50 Lakh`, `₹1.25 Cr`), and standard DD/MM/YYYY date formatting without intermediate precision loss.
+  3. Expand `COLUMN_PATTERNS` in `dataset_service.py` to auto-detect Indian commercial column synonyms (`state`, `city`, `mandi`, `cogs`, `unit_cost`, `mrp`, `selling_price`).
+  4. Localize RAG business documents (BharatTrade Pricing, Return, and Regional Target Policies), AI Copilot example prompts, and ReportLab executive PDF compilations with Indian commercial context and legal disclosures.
+* **Consequences:** Immediate commercial relevance for Indian wholesale and retail distributors, zero risk of data privacy violations, authentic regional demonstration experience, and full compatibility with existing deterministic and ML pipelines.
+
+

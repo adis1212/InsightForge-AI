@@ -1,14 +1,14 @@
 # InsightForge AI — Product Specification
 
-**Version:** 1.0.0  
-**Target Milestone:** Computer Science Prompt Engineering Course — Capstone Project  
-**System Class:** B2B SaaS Augmented Analytics Platform (Mobile-First)
+**Version:** 2.0.0 (Indian Business Edition)  
+**Target Milestone:** Computer Science Prompt Engineering Course — Capstone Project & Production Release  
+**System Class:** B2B SaaS Augmented Commercial Analytics Platform (Mobile-First PWA)
 
 ---
 
 ## 1. Executive Summary & Vision
 
-**InsightForge AI** is an intelligent, augmented analytics SaaS platform tailored for small-to-medium wholesale distributors, B2B merchants, and multi-channel retailers. The platform transforms raw tabular transactional records into actionable commercial intelligence, strategic diagnostic narratives, and automated operational reports.
+**InsightForge AI — Indian Business Edition** is an intelligent, augmented commercial analytics SaaS platform tailored for small-to-medium wholesale distributors, FMCG super-stockists, and multi-channel retailers across India. The platform transforms raw tabular transactional records into actionable commercial intelligence, strategic diagnostic narratives, predictive forecasts, and automated boardroom PDF reports.
 
 InsightForge AI enforces a **strict architectural boundary between deterministic computation and generative reasoning**:
 > **Core Tenet:** *Never ask a Large Language Model to calculate numbers.*  
@@ -19,13 +19,14 @@ InsightForge AI enforces a **strict architectural boundary between deterministic
 ## 2. Target Persona & Problem Statement
 
 ### 2.1 Target Persona
-* **Primary:** Operations Director, Inventory Lead, and Commercial Finance Manager at B2B wholesale / distribution firms ($2M–$50M annual turnover).
+* **Primary:** Operations Director, Inventory Lead, and Commercial Finance Manager at B2B wholesale / FMCG distribution firms (₹5 Crore – ₹100 Crore annual turnover) in hubs like Pune, Mumbai, Nagpur, Bengaluru, Hyderabad, Delhi NCR, Ahmedabad, Chennai, and Jaipur.
 * **Environment:** Frequent floor work, mobile warehouse supervision, desktop executive reviews. Needs immediate responsiveness across mobile viewports (smartphones, tablets) and high-density desktop displays.
 
 ### 2.2 Core Friction Points
-1. **Spreadsheet Fragility:** Inability to reliably detect anomalies, negative quantity cancellations, or customer churn across large transaction logs (e.g. 500,000+ line items).
+1. **Spreadsheet Fragility:** Inability to reliably detect anomalies, negative quantity cancellations, or customer churn across large transaction logs (e.g. 5,000 to 50,000+ line items).
 2. **Hallucination Risk in LLM Analytics:** Commercial leaders cannot trust vanilla LLM chat interfaces (ChatGPT, Claude) for quantitative decision-making due to numerical hallucinations.
-3. **Data Silos:** Disconnect between tabular transactional data and enterprise knowledge (supplier contracts, credit terms, SLA agreements).
+3. **Data Silos:** Disconnect between tabular transactional data and enterprise knowledge (supplier contracts, credit terms, SLA agreements, GST rules).
+
 
 ---
 

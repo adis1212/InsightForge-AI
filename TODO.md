@@ -259,3 +259,39 @@ Status Legend:
   - [x] Backend: **110 passed Pytest tests** (100% pass rate).
   - [x] Frontend: **10 passed Vitest tests**; TypeScript compiler clean; Vite production build verified.
 
+## Master Prompt 7 — Indian Business Edition, Real Dataset Research & Localization (Verified Complete)
+- [x] Phase A — Comprehensive Project Audit:
+  - [x] Conducted 16-module architectural audit across frontend, backend, ML, RAG, and agent systems.
+  - [x] Created [docs/PROJECT_AUDIT.md](file:///d:/Insightforge/docs/PROJECT_AUDIT.md) documenting module locations, connectivity, and status.
+- [x] Phase B — Real Indian Business Dataset Research:
+  - [x] Surveyed public Indian commercial datasets across data.gov.in (AGMARKNET Mandi prices) and Kaggle (Amazon India Seller Central, Retail FMCG).
+  - [x] Evaluated candidates across 14 standardized dimensions and constructed suitability matrix in [docs/DATASET_RESEARCH.md](file:///d:/Insightforge/docs/DATASET_RESEARCH.md).
+  - [x] Implemented official data.gov.in AGMARKNET mandi data ingestion script ([backend/scripts/ingest_indian_mandi_data.py](file:///d:/Insightforge/backend/scripts/ingest_indian_mandi_data.py)).
+- [x] Phase C — Indian Business Demo Engine (BharatTrade Distributors):
+  - [x] Created deterministic seeded FMCG wholesale simulation ([backend/scripts/generate_indian_demo_data.py](file:///d:/Insightforge/backend/scripts/generate_indian_demo_data.py)).
+  - [x] Generated [data/samples/bharattrade_fmcg_transactions.csv](file:///d:/Insightforge/data/samples/bharattrade_fmcg_transactions.csv) (6,000 records, 24 months, 6 FMCG categories, INR prices, COGS, GST slabs, documented anomalies).
+- [x] Phase D — Complete Indian Localization:
+  - [x] Centralized Indian Rupee (INR / ₹) formatting supporting Lakhs and Crores (`formatINR`, `formatIndianCompact`) in [frontend/src/lib/utils.ts](file:///d:/Insightforge/frontend/src/lib/utils.ts).
+  - [x] Indian date formatting (DD/MM/YYYY) via `formatIndianDate`.
+  - [x] Currency integrity preserving exact floating-point calculations with display formatting.
+  - [x] Expanded column auto-detection in [backend/app/services/dataset_service.py](file:///d:/Insightforge/backend/app/services/dataset_service.py) with Indian synonyms (`state`, `city`, `mandi`, `cogs`, `unit_cost`, `mrp`).
+- [x] Phase E — Intelligence & Reporting Upgrades for India:
+  - [x] Localized Analytics Engine supporting INR formatting and state/city regional leaderboards.
+  - [x] Added realistic Indian business RAG documents in [data/demo_knowledge/](file:///d:/Insightforge/data/demo_knowledge/) (`bharattrade_pricing_policy.txt`, `bharattrade_return_policy.txt`, `bharattrade_regional_targets.txt`).
+  - [x] Localized AI Copilot example prompt chips in [frontend/src/pages/AICopilotPage.tsx](file:///d:/Insightforge/frontend/src/pages/AICopilotPage.tsx).
+  - [x] Localized Boardroom Executive PDF generator in [backend/app/services/report_service.py](file:///d:/Insightforge/backend/app/services/report_service.py) with BharatTrade branding, INR symbols, and GST disclosures.
+- [x] Phase F — Exhaustive Academic Project Documentation:
+  - [x] Rebuilt [README.md](file:///d:/Insightforge/README.md) covering all 36 specified sections.
+  - [x] Created [docs/PROJECT_EXPLANATION.md](file:///d:/Insightforge/docs/PROJECT_EXPLANATION.md) (Dual-level beginner and technical guide).
+  - [x] Created [docs/FEATURE_INVENTORY.md](file:///d:/Insightforge/docs/FEATURE_INVENTORY.md) (Feature-by-feature catalog).
+  - [x] Created [docs/TECHNOLOGY_DECISIONS.md](file:///d:/Insightforge/docs/TECHNOLOGY_DECISIONS.md) (Technology rationales and tradeoffs).
+  - [x] Created [docs/PROJECT_HISTORY.md](file:///d:/Insightforge/docs/PROJECT_HISTORY.md) (Factual development chronicle and fixes).
+  - [x] Updated [DEMO_SCRIPT.md](file:///d:/Insightforge/DEMO_SCRIPT.md) with 5–7 minute college demonstration walkthrough.
+  - [x] Updated [VIVA_QUESTIONS.md](file:///d:/Insightforge/VIVA_QUESTIONS.md) with Indian edition defense questions.
+  - [x] Recorded ADR-015 in [DECISIONS.md](file:///d:/Insightforge/DECISIONS.md).
+- [x] Phase G — Testing & Validation:
+  - [x] Fixed frontend formatting test regressions; expanded Vitest suite to **13 passed tests** (100% pass rate).
+  - [x] Verified full backend suite: **110 passed Pytest tests** (100% pass rate).
+  - [x] Verified clean Vite production build.
+
+
