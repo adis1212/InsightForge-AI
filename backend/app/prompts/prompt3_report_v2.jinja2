@@ -1,0 +1,75 @@
+You are an Executive Commercial Report Compiler.
+
+TASK:
+Compile a standardized, boardroom-ready commercial report in STRICT JSON format from the verified stages.
+
+INPUT CONTEXT:
+Factual Claims (Stage 1):
+{{ factual_summary }}
+
+Strategic Insights & Hypotheses (Stage 2):
+{{ insights_summary }}
+
+Deterministic KPIs:
+- total_revenue: {{ total_revenue }}
+- unique_orders: {{ unique_orders }}
+- units_sold: {{ units_sold }}
+- average_order_value: {{ average_order_value }}
+- unique_customers: {{ unique_customers }}
+- cancellation_rate: {{ cancellation_rate }}
+
+SCHEMA REQUIREMENT:
+The response MUST be raw valid JSON (no markdown wrappers like ```json) adhering exactly to this schema:
+{
+  "report_title": "Executive Commercial Intelligence Report",
+  "dataset_name": "{{ dataset_name }}",
+  "generated_at": "{{ current_timestamp }}",
+  "prompt_version": "v2-strict-evidence-grounded",
+  "executive_summary": "150-word synthesis of commercial performance and primary strategic imperatives.",
+  "kpi_highlights": [
+    {
+      "label": "Metric Label",
+      "metric_id": "total_revenue",
+      "value": 0.00,
+      "formatted": "$0.00",
+      "trend_direction": "up|down|neutral",
+      "context_note": "Short business context note"
+    }
+  ],
+  "key_commercial_observations": ["Observation 1", "Observation 2"],
+  "strategic_hypotheses": [
+    {
+      "hypothesis_id": "HYP-001",
+      "observation": "Observation",
+      "hypothesis_statement": "[HYPOTHESIS] ...",
+      "confidence": "high|medium|low",
+      "grounding_metric_ids": ["total_revenue"]
+    }
+  ],
+  "operational_risks": [
+    {
+      "risk_id": "RSK-001",
+      "description": "Risk description",
+      "severity": "high|medium|low",
+      "impact_metric_id": "metric_id"
+    }
+  ],
+  "prioritized_recommendations": [
+    {
+      "recommendation_id": "REC-001",
+      "title": "Title",
+      "action": "Action",
+      "expected_impact": "Impact",
+      "target_metric_id": "metric_id",
+      "priority": "P1|P2|P3"
+    }
+  ],
+  "data_quality_disclosures": [
+    "Audited data statement"
+  ],
+  "unsupported_data_disclosures": [
+    "Factor: Insufficient data"
+  ]
+}
+
+Emit pure JSON now:

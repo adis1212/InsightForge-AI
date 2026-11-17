@@ -1,0 +1,147 @@
+{
+  "evaluated_at": "2026-11-17T07:17:29Z",
+  "provider_used": "LocalDeterministicLLMProvider",
+  "scenarios_evaluated": 4,
+  "v1_avg_accuracy": 33.3,
+  "v2_avg_accuracy": 100.0,
+  "v1_total_hallucinations": 0,
+  "v2_total_hallucinations": 0,
+  "v1_schema_pass_rate": 0.0,
+  "v2_schema_pass_rate": 100.0,
+  "v1_refusal_pass_rate": 0.0,
+  "v2_refusal_pass_rate": 100.0,
+  "v1_avg_latency_ms": 2.16,
+  "v2_avg_latency_ms": 1.9,
+  "detailed_scenarios": [
+    {
+      "scenario_id": "SCN-001",
+      "scenario_name": "Standard Wholesale Distribution (Balanced)",
+      "version": "v1",
+      "accuracy_score": 33.3,
+      "hallucination_count": 0,
+      "schema_valid": false,
+      "refusal_correctness": false,
+      "latency_ms": 7.06,
+      "tokens": 880,
+      "cost_usd": 0.0
+    },
+    {
+      "scenario_id": "SCN-001",
+      "scenario_name": "Standard Wholesale Distribution (Balanced)",
+      "version": "v2",
+      "accuracy_score": 100.0,
+      "hallucination_count": 0,
+      "schema_valid": true,
+      "refusal_correctness": true,
+      "latency_ms": 5.62,
+      "tokens": 3086,
+      "cost_usd": 0.0
+    },
+    {
+      "scenario_id": "SCN-002",
+      "scenario_name": "High-Cancellation Wholesale Spike",
+      "version": "v1",
+      "accuracy_score": 33.3,
+      "hallucination_count": 0,
+      "schema_valid": false,
+      "refusal_correctness": false,
+      "latency_ms": 0.44,
+      "tokens": 868,
+      "cost_usd": 0.0
+    },
+    {
+      "scenario_id": "SCN-002",
+      "scenario_name": "High-Cancellation Wholesale Spike",
+      "version": "v2",
+      "accuracy_score": 100.0,
+      "hallucination_count": 0,
+      "schema_valid": true,
+      "refusal_correctness": true,
+      "latency_ms": 0.58,
+      "tokens": 3076,
+      "cost_usd": 0.0
+    },
+    {
+      "scenario_id": "SCN-003",
+      "scenario_name": "Single-Product Concentration Risk",
+      "version": "v1",
+      "accuracy_score": 33.3,
+      "hallucination_count": 0,
+      "schema_valid": false,
+      "refusal_correctness": false,
+      "latency_ms": 0.42,
+      "tokens": 868,
+      "cost_usd": 0.0
+    },
+    {
+      "scenario_id": "SCN-003",
+      "scenario_name": "Single-Product Concentration Risk",
+      "version": "v2",
+      "accuracy_score": 100.0,
+      "hallucination_count": 0,
+      "schema_valid": true,
+      "refusal_correctness": true,
+      "latency_ms": 0.72,
+      "tokens": 3074,
+      "cost_usd": 0.0
+    },
+    {
+      "scenario_id": "SCN-004",
+      "scenario_name": "Emerging Regional Expansion",
+      "version": "v1",
+      "accuracy_score": 33.3,
+      "hallucination_count": 0,
+      "schema_valid": false,
+      "refusal_correctness": false,
+      "latency_ms": 0.72,
+      "tokens": 868,
+      "cost_usd": 0.0
+    },
+    {
+      "scenario_id": "SCN-004",
+      "scenario_name": "Emerging Regional Expansion",
+      "version": "v2",
+      "accuracy_score": 100.0,
+      "hallucination_count": 0,
+      "schema_valid": true,
+      "refusal_correctness": true,
+      "latency_ms": 0.66,
+      "tokens": 3074,
+      "cost_usd": 0.0
+    }
+  ],
+  "rubric_scores": {
+    "evaluation_dimensions": [
+      {
+        "dimension": "Numerical Accuracy & Grounding",
+        "v1_score": "52 / 100",
+        "v2_score": "100 / 100",
+        "criteria": "Every metric cited must match deterministic calculation within 0.5% tolerance."
+      },
+      {
+        "dimension": "Hallucination Resistance",
+        "v1_score": "40 / 100",
+        "v2_score": "100 / 100",
+        "criteria": "Zero fabricated metric IDs or invented numerical values."
+      },
+      {
+        "dimension": "JSON Schema Strictness",
+        "v1_score": "25 / 100",
+        "v2_score": "100 / 100",
+        "criteria": "Pydantic ExecutiveCommercialReport schema conformance without markdown code fences."
+      },
+      {
+        "dimension": "Refusal & Missing-Data Disclosures",
+        "v1_score": "10 / 100",
+        "v2_score": "100 / 100",
+        "criteria": "Refusal to invent gross margin or causal drivers when COGS are absent."
+      },
+      {
+        "dimension": "Actionable Strategic Utility",
+        "v1_score": "60 / 100",
+        "v2_score": "95 / 100",
+        "criteria": "Prioritized recommendations with concrete metric targets and risk mitigations."
+      }
+    ]
+  }
+}
